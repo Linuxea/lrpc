@@ -12,28 +12,27 @@ import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.UUID;
 
-public class ClientProxyUtil implements InvocationHandler {
+public class ClientProxyFactory implements InvocationHandler {
 
   private final ServiceDiscoverer serviceDiscoverer;
   private final ServiceLoadBalance serviceLoadBalance;
   private final NetClient netClient;
   private final Class<?> targetClazz;
-  private final Object target;
 
-  public ClientProxyUtil(ServiceDiscoverer serviceDiscoverer, ServiceLoadBalance serviceLoadBalance,
-      NetClient netClient, Class<?> targetClazz, Object target) {
+  public ClientProxyFactory(ServiceDiscoverer serviceDiscoverer,
+      ServiceLoadBalance serviceLoadBalance,
+      NetClient netClient, Class<?> targetClazz) {
     this.serviceDiscoverer = serviceDiscoverer;
     this.serviceLoadBalance = serviceLoadBalance;
     this.netClient = netClient;
     this.targetClazz = targetClazz;
-    this.target = target;
   }
 
 
   @SuppressWarnings("all")
-  public <T> T getProxyClient(Class<T> tClass) {
-    return (T) Proxy.newProxyInstance(tClass.getClassLoader(), new Class[]{tClass.getClass()},
-        this);
+  public <T> T getProxyClient() {
+    return (T) Proxy.newProxyInstance(targetClazz.getClassLoader(),
+        new Class[]{targetClazz}, this);
   }
 
   @Override

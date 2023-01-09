@@ -8,7 +8,11 @@ import com.linuxea.lrpc.server.ServiceObj;
 public abstract class BaseHandler {
 
 
-  protected RegisterQuery registerQuery;
+  protected final RegisterQuery registerQuery;
+
+  protected BaseHandler(RegisterQuery registerQuery) {
+    this.registerQuery = registerQuery;
+  }
 
   public RpcResponse handleRequest(RpcRequest request) {
     //1. local service obj

@@ -1,6 +1,8 @@
 package com.linuxea.lrpc.common.model;
 
-public class RpcMessage {
+import java.io.Serializable;
+
+public class RpcMessage implements Serializable {
 
 
   private Object data;

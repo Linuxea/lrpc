@@ -10,11 +10,6 @@
       <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <artifactId>registry</artifactId>
-      <groupId>com.linuxea</groupId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
       <artifactId>common</artifactId>
       <groupId>com.linuxea</groupId>
       <version>1.0-SNAPSHOT</version>

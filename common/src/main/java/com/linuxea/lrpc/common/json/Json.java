@@ -1,10 +1,11 @@
-package com.linuxea.lrpc.registry.json;
+package com.linuxea.lrpc.common.json;
 
 public interface Json {
 
 
   /**
    * to json string
+   *
    * @param obj obj
    * @return json string
    */
@@ -12,10 +13,11 @@ public interface Json {
 
   /**
    * json to obj
-   * @param json json string
+   *
+   * @param json   json string
    * @param tClass obj Class
+   * @param <T>    Class type
    * @return instance of Class
-   * @param <T> Class type
    */
   <T> T toObj(String json, Class<T> tClass);
 

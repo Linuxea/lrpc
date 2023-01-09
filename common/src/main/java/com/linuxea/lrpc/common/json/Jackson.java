@@ -1,4 +1,4 @@
-package com.linuxea.lrpc.registry.json;
+package com.linuxea.lrpc.common.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

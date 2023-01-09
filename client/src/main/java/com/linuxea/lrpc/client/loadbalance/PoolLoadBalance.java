@@ -10,6 +10,6 @@ public class PoolLoadBalance implements ServiceLoadBalance {
 
   @Override
   public Service selectOne(List<Service> services) {
-    return services.get(counter.getAndAdd(1) / services.size());
+    return services.get(counter.getAndAdd(1) % services.size());
   }
 }

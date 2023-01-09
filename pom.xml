@@ -11,11 +11,17 @@
       <scope>test</scope>
       <version>5.5.2</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>4.3.1</version>
+    </dependency>
+
   </dependencies>
   <groupId>com.linuxea</groupId>
   <modelVersion>4.0.0</modelVersion>
   <modules>
-    <module>registry</module>
     <module>client</module>
     <module>server</module>
     <module>common</module>

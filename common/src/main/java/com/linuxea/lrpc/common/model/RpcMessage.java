@@ -7,6 +7,12 @@ public class RpcMessage implements Serializable {
 
   private Object data;
 
+  public RpcMessage() {
+  }
+
+  public RpcMessage(Object data) {
+    this.data = data;
+  }
 
   public Object getData() {
     return data;

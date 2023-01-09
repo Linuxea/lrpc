@@ -3,16 +3,13 @@ package com.linuxea.lrpc.server;
 import com.linuxea.lrpc.common.model.RpcMessage;
 import com.linuxea.lrpc.common.model.RpcRequest;
 import com.linuxea.lrpc.common.model.RpcResponse;
+import com.linuxea.lrpc.common.serialize.SerializeFactory;
+import com.linuxea.lrpc.common.serialize.SerializeFactoryBuilder;
 import com.linuxea.lrpc.common.tutorial.Hello;
 import com.linuxea.lrpc.common.tutorial.HelloImpl;
 import com.linuxea.lrpc.server.handler.BaseHandler;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+
 import java.io.InputStream;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -40,7 +37,7 @@ public class ServerSocketRpcServer extends RpcServer {
     serverSocket = new ServerSocket(port);
     while (true) {
       Socket accept = serverSocket.accept();
-      new Thread(new processReq(accept)).start();
+      new ServerThreadFactory().newThread(new processReq(accept)).start();
     }
 
   }
@@ -62,31 +59,23 @@ public class ServerSocketRpcServer extends RpcServer {
     public void run() {
 
       while (true) {
-        try (InputStream inputStream = accept.getInputStream();
-            OutputStream outputStream = accept.getOutputStream()) {
+        try (InputStream inputStream = accept.getInputStream(); OutputStream outputStream = accept.getOutputStream()) {
 
           byte[] read = new byte[1024];
           int offset = inputStream.read(read);
-
           byte[] dest = new byte[offset];
           System.arraycopy(read, 0, dest, 0, offset);
 
+          SerializeFactory serializeFactory = SerializeFactoryBuilder.build("jdk");
+          // deserialize to handle request
+          RpcMessage rpcMessage = serializeFactory.deserialize(dest, RpcMessage.class);
+          RpcRequest rpcRequest = (RpcRequest) rpcMessage.getData();
+          RpcResponse rpcResponse = baseHandler.handleRequest(rpcRequest);
+          // serialize to send resp
+          byte[] serialize = serializeFactory.serialize(new RpcMessage(rpcResponse));
+          outputStream.write(serialize);
 
-          try (ByteArrayInputStream bis = new ByteArrayInputStream(dest);
-              ObjectInput in = new ObjectInputStream(bis)) {
-            RpcMessage rpcMessage = (RpcMessage) in.readObject();
-            RpcRequest rpcRequest = (RpcRequest) rpcMessage.getData();
-            RpcResponse rpcResponse = baseHandler.handleRequest(rpcRequest);
-
-            // write back
-            try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                ObjectOutputStream out = new ObjectOutputStream(bos)) {
-              out.writeObject(rpcResponse);
-              out.flush();
-              outputStream.write(bos.toByteArray());
-            }
-          }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (Exception e) {
           throw new RuntimeException(e);
         }
       }

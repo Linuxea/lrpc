@@ -30,8 +30,9 @@ public class RpcClientTest {
         Hello.class);
 
     Hello hello = clientProxyFactory.getProxyClient();
-    String linuxea = hello.hello("linuxea");
-    System.out.println(linuxea);
+
+    System.out.println(hello.hello("linuxea"));
+    System.out.println(hello.hello("summer"));
 
 
   }

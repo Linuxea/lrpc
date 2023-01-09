@@ -35,9 +35,13 @@ public class ServerSocketRpcServer extends RpcServer {
 
 
     serverSocket = new ServerSocket(port);
-    while (true) {
-      Socket accept = serverSocket.accept();
-      new ServerThreadFactory().newThread(new processReq(accept)).start();
+    while (!serverSocket.isClosed()) {
+      try {
+        Socket accept = serverSocket.accept();
+        new ServerThreadFactory().newThread(new processReq(accept)).start();
+      } catch (Exception e) {
+        break;
+      }
     }
 
   }
@@ -45,6 +49,7 @@ public class ServerSocketRpcServer extends RpcServer {
   @Override
   public void stop() throws Exception {
     this.serverSocket.close();
+    this.registryServer.remove();
   }
 
   private class processReq implements Runnable {
@@ -74,7 +79,6 @@ public class ServerSocketRpcServer extends RpcServer {
           // serialize to send resp
           byte[] serialize = serializeFactory.serialize(new RpcMessage(rpcResponse));
           outputStream.write(serialize);
-
         } catch (Exception e) {
           throw new RuntimeException(e);
         }

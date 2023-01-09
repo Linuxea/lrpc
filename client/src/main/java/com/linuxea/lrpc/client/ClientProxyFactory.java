@@ -53,6 +53,12 @@ public class ClientProxyFactory implements InvocationHandler {
 
     //3. 发送请求
     RpcResponse rpcResponse = netClient.sendReq(rpcRequest, selectOne);
+
+    // 4. 请求结果校验
+    if (rpcResponse.getException() != null) {
+      throw rpcResponse.getException();
+    }
+
     return rpcResponse.getReturnValue();
   }
 

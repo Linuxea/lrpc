@@ -2,7 +2,7 @@ package com.linuxea.lrpc.common.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.linuxea.lrpc.registry.exception.JsonException;
+import com.linuxea.lrpc.common.exception.JsonException;
 
 /**
  * jackson implement

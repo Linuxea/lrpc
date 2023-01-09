@@ -1,6 +1,6 @@
 package com.linuxea.lrpc.client.loadbalance;
 
-import java.security.Provider.Service;
+import com.linuxea.lrpc.common.model.Service;
 import java.util.List;
 
 /**

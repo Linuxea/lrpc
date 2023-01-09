@@ -3,16 +3,13 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.linuxea</groupId>
+    <artifactId>lrpc</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
 
-  <groupId>com.linuxea</groupId>
-  <artifactId>lrpc</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <modules>
-    <module>registry</module>
-    <module>client</module>
-    <module>server</module>
-  </modules>
+  <artifactId>client</artifactId>
 
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
@@ -22,10 +19,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.5.2</version>
-      <scope>test</scope>
+      <groupId>com.linuxea</groupId>
+      <artifactId>server</artifactId>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 

@@ -1,6 +1,7 @@
 package com.linuxea.lrpc.server;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.linuxea.lrpc.common.codec.LengthFieldCodec;
 import com.linuxea.lrpc.common.json.Jackson;
 import com.linuxea.lrpc.common.json.Json;
 import com.linuxea.lrpc.server.handler.BaseHandler;
@@ -16,10 +17,9 @@ public class RpcServerTest {
 
     Jedis jedis = new Jedis("redis-host.com", 6379);
     Json jackson = new Jackson(new ObjectMapper());
-    RegistryServer redisRegisterServer = new RedisRegisterServer(jedis, jackson, 9090);
-    BaseHandler requestReflectHandler = new RequestReflectHandler((RegisterQuery)redisRegisterServer);
-    RpcServer rpcServer = new ServerSocketRpcServer(9090, redisRegisterServer,
-        requestReflectHandler);
+    RegistryServer redisRegisterServer = new RedisRegisterServer(jedis, jackson, 9090, "jdk", "gzip");
+    BaseHandler requestReflectHandler = new RequestReflectHandler((RegisterQuery) redisRegisterServer);
+    RpcServer rpcServer = new ServerSocketRpcServer(9090, redisRegisterServer, requestReflectHandler, new LengthFieldCodec());
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
       try {

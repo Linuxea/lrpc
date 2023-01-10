@@ -2,10 +2,11 @@ package com.linuxea.lrpc.server;
 
 import com.linuxea.lrpc.common.json.Json;
 import com.linuxea.lrpc.common.model.Service;
+import redis.clients.jedis.Jedis;
+
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
-import redis.clients.jedis.Jedis;
 
 public class RedisRegisterServer extends LocalRegisterServer {
 
@@ -13,10 +14,13 @@ public class RedisRegisterServer extends LocalRegisterServer {
   private final Json json;
   private final List<String> remotePathUrl = new ArrayList<>();
 
-  public RedisRegisterServer(Jedis jedis, Json json, Integer serverPort) {
+  public RedisRegisterServer(Jedis jedis, Json json, Integer serverPort, String serialize, String compress) {
+    super(serialize, compress);
     this.jedis = jedis;
     this.json = json;
     this.serverPort = serverPort;
+    super.serialize = serialize;
+    super.compress = compress;
   }
 
   @Override

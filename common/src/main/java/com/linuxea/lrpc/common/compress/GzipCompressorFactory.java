@@ -15,8 +15,7 @@ public class GzipCompressorFactory implements CompressorFactory {
     if (bytes == null) {
       throw new NullPointerException("bytes is null");
     }
-    try (ByteArrayOutputStream out = new ByteArrayOutputStream();
-        GZIPOutputStream gzip = new GZIPOutputStream(out)) {
+    try (ByteArrayOutputStream out = new ByteArrayOutputStream(); GZIPOutputStream gzip = new GZIPOutputStream(out)) {
       gzip.write(bytes);
       gzip.flush();
       gzip.finish();
@@ -31,8 +30,7 @@ public class GzipCompressorFactory implements CompressorFactory {
     if (bytes == null) {
       throw new NullPointerException("bytes is null");
     }
-    try (ByteArrayOutputStream out = new ByteArrayOutputStream();
-        GZIPInputStream gunzip = new GZIPInputStream(new ByteArrayInputStream(bytes))) {
+    try (ByteArrayOutputStream out = new ByteArrayOutputStream(); GZIPInputStream gunzip = new GZIPInputStream(new ByteArrayInputStream(bytes))) {
       byte[] buffer = new byte[BUFFER_SIZE];
       int n;
       while ((n = gunzip.read(buffer)) > -1) {

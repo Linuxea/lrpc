@@ -10,6 +10,11 @@ public abstract class LocalRegisterServer implements RegistryServer, RegisterQue
   protected String compress;
   protected Integer serverPort;
 
+  public LocalRegisterServer(String serialize, String compress) {
+    this.serialize = serialize;
+    this.compress = compress;
+  }
+
   @Override
   public void registry(ServiceObj serviceObj) throws Exception {
     this.cache.putIfAbsent(serviceObj.getName(), serviceObj);

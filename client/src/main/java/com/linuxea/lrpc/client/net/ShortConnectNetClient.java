@@ -7,8 +7,6 @@ import com.linuxea.lrpc.common.model.RpcMessage;
 import com.linuxea.lrpc.common.model.RpcRequest;
 import com.linuxea.lrpc.common.model.RpcResponse;
 import com.linuxea.lrpc.common.model.Service;
-import com.linuxea.lrpc.common.serialize.SerializeFactory;
-import com.linuxea.lrpc.common.serialize.SerializeFactoryBuilder;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -37,9 +35,8 @@ public class ShortConnectNetClient implements NetClient {
       MessageEncode encode = this.abstractMessageCodecFactory.encode();
       outputStream.write(encode.encode(rpcMessage));
       // resp
-      byte[] readAllBytes = socketInputStream.readAllBytes();
       MessageDecode decode = this.abstractMessageCodecFactory.decode();
-      return (RpcResponse) decode.decode(readAllBytes).getData();
+      return (RpcResponse) decode.decode(socketInputStream).getData();
     }
   }
 }

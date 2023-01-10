@@ -1,10 +1,11 @@
 package com.linuxea.lrpc.server;
 
+import com.linuxea.lrpc.common.codec.AbstractMessageCodecFactory;
+import com.linuxea.lrpc.common.codec.MessageDecode;
+import com.linuxea.lrpc.common.codec.MessageEncode;
 import com.linuxea.lrpc.common.model.RpcMessage;
 import com.linuxea.lrpc.common.model.RpcRequest;
 import com.linuxea.lrpc.common.model.RpcResponse;
-import com.linuxea.lrpc.common.serialize.SerializeFactory;
-import com.linuxea.lrpc.common.serialize.SerializeFactoryBuilder;
 import com.linuxea.lrpc.common.tutorial.Hello;
 import com.linuxea.lrpc.common.tutorial.HelloImpl;
 import com.linuxea.lrpc.server.handler.BaseHandler;
@@ -18,10 +19,12 @@ public class ServerSocketRpcServer extends RpcServer {
 
   private final BaseHandler baseHandler;
   private ServerSocket serverSocket;
+  private final AbstractMessageCodecFactory abstractMessageCodecFactory;
 
-  public ServerSocketRpcServer(int port, RegistryServer registryServer, BaseHandler baseHandler) {
+  public ServerSocketRpcServer(int port, RegistryServer registryServer, BaseHandler baseHandler, AbstractMessageCodecFactory abstractMessageCodecFactory) {
     super(port, registryServer);
     this.baseHandler = baseHandler;
+    this.abstractMessageCodecFactory = abstractMessageCodecFactory;
   }
 
   @Override
@@ -66,20 +69,15 @@ public class ServerSocketRpcServer extends RpcServer {
       while (true) {
         try (InputStream inputStream = accept.getInputStream(); OutputStream outputStream = accept.getOutputStream()) {
 
+          MessageDecode decode = abstractMessageCodecFactory.decode();
+          RpcMessage rpcMessage = decode.decode(inputStream);
 
-          byte[] read = new byte[1024];
-          int offset = inputStream.read(read);
-          byte[] dest = new byte[offset];
-          System.arraycopy(read, 0, dest, 0, offset);
-
-          SerializeFactory serializeFactory = SerializeFactoryBuilder.build("jdk");
-          // deserialize to handle request
-          RpcMessage rpcMessage = serializeFactory.deserialize(dest, RpcMessage.class);
           RpcRequest rpcRequest = (RpcRequest) rpcMessage.getData();
           RpcResponse rpcResponse = baseHandler.handleRequest(rpcRequest);
-          // serialize to send resp
-          byte[] serialize = serializeFactory.serialize(new RpcMessage(rpcResponse));
-          outputStream.write(serialize);
+          // send resp
+          MessageEncode encode = abstractMessageCodecFactory.encode();
+          byte[] respBytes = encode.encode(new RpcMessage(rpcResponse, rpcMessage.getCompress(), rpcMessage.getSerialize()));
+          outputStream.write(respBytes);
         } catch (Exception e) {
           throw new RuntimeException(e);
         }

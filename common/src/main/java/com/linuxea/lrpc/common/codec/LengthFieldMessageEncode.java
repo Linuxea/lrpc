@@ -23,7 +23,7 @@ public class LengthFieldMessageEncode implements MessageEncode {
         int bodyLength = compressBytes.length;
         int fullLength = 12 + bodyLength; // four bytes for full length field
         ByteBuffer byteBuffer = ByteBuffer.allocate(fullLength);
-        byteBuffer.put(CodecConstant.MAGIC_NUM).put((byte) 1).putInt(fullLength).put((byte) 1).put(SerailizeTypeEnum.JDK.getCode()).put(CompressTypeEnum.UNZIP.getCode()).put(compressBytes);
+        byteBuffer.put(CodecConstant.MAGIC_NUM).put((byte) 1).putInt(fullLength).put((byte) 1).put(SerailizeTypeEnum.JDK.getCode()).put(CompressTypeEnum.GZIP.getCode()).put(compressBytes);
         return byteBuffer.array();
     }
 }

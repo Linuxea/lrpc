@@ -5,8 +5,7 @@ import java.util.Arrays;
 public enum CompressTypeEnum {
 
 
-    UNZIP((byte)1, "unzip"),
-
+    GZIP((byte) 1, "gzip"),
 
 
     ;

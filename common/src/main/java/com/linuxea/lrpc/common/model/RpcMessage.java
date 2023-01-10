@@ -27,6 +27,12 @@ public class RpcMessage implements Serializable {
     this.data = data;
   }
 
+  public RpcMessage(Object data, String compress, String serialize) {
+    this.data = data;
+    this.compress = compress;
+    this.serialize = serialize;
+  }
+
   public Object getData() {
     return data;
   }

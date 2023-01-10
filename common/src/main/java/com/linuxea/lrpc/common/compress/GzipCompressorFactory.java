@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-public class GzipCompressor implements Compressor {
+public class GzipCompressorFactory implements CompressorFactory {
 
   private static final int BUFFER_SIZE = 1024 * 4;
 

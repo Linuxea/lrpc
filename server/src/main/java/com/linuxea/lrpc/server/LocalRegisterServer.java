@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class LocalRegisterServer implements RegistryServer, RegisterQuery {
 
   protected final Map<String, ServiceObj> cache = new ConcurrentHashMap<>();
-  protected String protocol;
+  protected String serialize;
   protected String compress;
   protected Integer serverPort;
 

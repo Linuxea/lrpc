@@ -22,8 +22,10 @@ public class ShortConnectNetClient implements NetClient {
 
       RpcMessage rpcMessage = new RpcMessage();
       rpcMessage.setData(rpcRequest);
+      rpcMessage.setSerialize(service.getSerialize());
+      rpcMessage.setCompress(service.getCompress());
 
-      SerializeFactory serializeFactory = SerializeFactoryBuilder.build("jdk");
+      SerializeFactory serializeFactory = SerializeFactoryBuilder.build(service.getSerialize());
       // req
       outputStream.write(serializeFactory.serialize(rpcMessage));
       // resp

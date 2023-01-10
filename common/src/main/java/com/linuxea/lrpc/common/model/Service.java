@@ -21,9 +21,9 @@ public class Service {
   private String serviceName;
 
   /**
-   * 服务协议
+   * 序列化协议
    */
-  private String protocol;
+  private String serialize;
 
   /**
    * 压缩协议
@@ -55,13 +55,6 @@ public class Service {
     this.serviceName = serviceName;
   }
 
-  public String getProtocol() {
-    return protocol;
-  }
-
-  public void setProtocol(String protocol) {
-    this.protocol = protocol;
-  }
 
   public String getCompress() {
     return compress;
@@ -69,6 +62,15 @@ public class Service {
 
   public void setCompress(String compress) {
     this.compress = compress;
+  }
+
+
+  public String getSerialize() {
+    return serialize;
+  }
+
+  public void setSerialize(String serialize) {
+    this.serialize = serialize;
   }
 }
 

@@ -24,7 +24,7 @@ public class RedisRegisterServer extends LocalRegisterServer {
     super.registry(serviceObj);
     // 注册到 redis
     String host = InetAddress.getLocalHost().getHostAddress();
-    Service service = serviceObj.getService(host, serverPort, super.protocol, super.compress);
+    Service service = serviceObj.getService(host, serverPort, super.serialize, super.compress);
     String servicePath = "/rpc" + "/" + service.getServiceName() + "/service";
     this.jedis.sadd(servicePath, this.json.toString(service));
     remotePathUrl.add(servicePath);

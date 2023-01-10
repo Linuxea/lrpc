@@ -19,12 +19,12 @@ public class ServiceObj {
    */
   private Object obj;
 
-  public Service getService(String host, int port, String protocol, String compress) {
+  public Service getService(String host, int port, String serialize, String compress) {
     Service service = new Service();
     service.setIp(host);
     service.setPort(port);
     service.setServiceName(this.name);
-    service.setProtocol(protocol);
+    service.setSerialize(serialize);
     service.setCompress(compress);
     return service;
   }

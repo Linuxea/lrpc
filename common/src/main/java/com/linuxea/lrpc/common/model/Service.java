@@ -23,12 +23,12 @@ public class Service {
   /**
    * 序列化协议
    */
-  private String serialize;
+  private byte serialize;
 
   /**
    * 压缩协议
    */
-  private String compress;
+  private byte compress;
 
 
   public String getIp() {
@@ -56,20 +56,20 @@ public class Service {
   }
 
 
-  public String getCompress() {
+  public byte getCompress() {
     return compress;
   }
 
-  public void setCompress(String compress) {
+  public void setCompress(byte compress) {
     this.compress = compress;
   }
 
 
-  public String getSerialize() {
+  public byte getSerialize() {
     return serialize;
   }
 
-  public void setSerialize(String serialize) {
+  public void setSerialize(byte serialize) {
     this.serialize = serialize;
   }
 }

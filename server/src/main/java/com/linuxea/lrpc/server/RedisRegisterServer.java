@@ -14,7 +14,7 @@ public class RedisRegisterServer extends LocalRegisterServer {
   private final Json json;
   private final List<String> remotePathUrl = new ArrayList<>();
 
-  public RedisRegisterServer(Jedis jedis, Json json, Integer serverPort, String serialize, String compress) {
+  public RedisRegisterServer(Jedis jedis, Json json, Integer serverPort, byte serialize, byte compress) {
     super(serialize, compress);
     this.jedis = jedis;
     this.json = json;

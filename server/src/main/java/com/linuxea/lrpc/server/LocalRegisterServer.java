@@ -6,11 +6,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class LocalRegisterServer implements RegistryServer, RegisterQuery {
 
   protected final Map<String, ServiceObj> cache = new ConcurrentHashMap<>();
-  protected String serialize;
-  protected String compress;
+  protected byte serialize;
+  protected byte compress;
   protected Integer serverPort;
 
-  public LocalRegisterServer(String serialize, String compress) {
+  public LocalRegisterServer(byte serialize, byte compress) {
     this.serialize = serialize;
     this.compress = compress;
   }

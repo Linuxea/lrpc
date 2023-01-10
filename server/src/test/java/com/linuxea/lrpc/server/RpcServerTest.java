@@ -2,8 +2,10 @@ package com.linuxea.lrpc.server;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.linuxea.lrpc.common.codec.LengthFieldCodec;
+import com.linuxea.lrpc.common.compress.CompressTypeEnum;
 import com.linuxea.lrpc.common.json.Jackson;
 import com.linuxea.lrpc.common.json.Json;
+import com.linuxea.lrpc.common.serialize.SerailizeTypeEnum;
 import com.linuxea.lrpc.server.handler.BaseHandler;
 import com.linuxea.lrpc.server.handler.RequestReflectHandler;
 import org.junit.jupiter.api.Test;
@@ -17,7 +19,7 @@ public class RpcServerTest {
 
     Jedis jedis = new Jedis("redis-host.com", 6379);
     Json jackson = new Jackson(new ObjectMapper());
-    RegistryServer redisRegisterServer = new RedisRegisterServer(jedis, jackson, 9090, "jdk", "gzip");
+    RegistryServer redisRegisterServer = new RedisRegisterServer(jedis, jackson, 9090, SerailizeTypeEnum.JDK.getCode(), CompressTypeEnum.GZIP.getCode());
     BaseHandler requestReflectHandler = new RequestReflectHandler((RegisterQuery) redisRegisterServer);
     RpcServer rpcServer = new ServerSocketRpcServer(9090, redisRegisterServer, requestReflectHandler, new LengthFieldCodec());
 

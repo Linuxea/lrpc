@@ -5,12 +5,12 @@ import java.util.Map;
 
 public class SerializeFactoryBuilder {
 
-    private final static Map<String, SerializeFactory> factoryCache = new HashMap<>() {{
-        put("jdk", new JdkSerializeFactory());
+    private final static Map<Byte, SerializeFactory> factoryCache = new HashMap<>() {{
+        put(SerailizeTypeEnum.JDK.getCode(), new JdkSerializeFactory());
     }};
 
-    public static SerializeFactory build(String type) {
-        return factoryCache.get(type.toLowerCase());
+    public static SerializeFactory build(byte type) {
+        return factoryCache.get(type);
     }
 
 }

@@ -14,12 +14,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ThreadFactory;
 
 public class ServerSocketRpcServer extends RpcServer {
 
   private final BaseHandler baseHandler;
   private ServerSocket serverSocket;
   private final AbstractMessageCodecFactory abstractMessageCodecFactory;
+  private final ThreadFactory threadFactory = new ServerThreadFactory();
 
   public ServerSocketRpcServer(int port, RegistryServer registryServer, BaseHandler baseHandler, AbstractMessageCodecFactory abstractMessageCodecFactory) {
     super(port, registryServer);
@@ -41,7 +43,7 @@ public class ServerSocketRpcServer extends RpcServer {
     while (!serverSocket.isClosed()) {
       try {
         Socket accept = serverSocket.accept();
-        new ServerThreadFactory().newThread(new processReq(accept)).start();
+        threadFactory.newThread(new processReq(accept)).start();
       } catch (Exception e) {
         break;
       }

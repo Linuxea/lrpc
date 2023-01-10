@@ -13,12 +13,12 @@ public class RpcMessage implements Serializable {
   /**
    * date field compress algorithm
    */
-  private String compress;
+  private byte compress;
 
   /**
    * data field serialization algorithm
    */
-  private String serialize;
+  private byte serialize;
 
   public RpcMessage() {
   }
@@ -27,7 +27,7 @@ public class RpcMessage implements Serializable {
     this.data = data;
   }
 
-  public RpcMessage(Object data, String compress, String serialize) {
+  public RpcMessage(Object data, byte compress, byte serialize) {
     this.data = data;
     this.compress = compress;
     this.serialize = serialize;
@@ -41,19 +41,19 @@ public class RpcMessage implements Serializable {
     this.data = data;
   }
 
-  public String getCompress() {
+  public byte getCompress() {
     return compress;
   }
 
-  public void setCompress(String compress) {
+  public void setCompress(byte compress) {
     this.compress = compress;
   }
 
-  public String getSerialize() {
+  public byte getSerialize() {
     return serialize;
   }
 
-  public void setSerialize(String serialize) {
+  public void setSerialize(byte serialize) {
     this.serialize = serialize;
   }
 }

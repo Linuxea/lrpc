@@ -26,14 +26,14 @@ public class RpcClientTest {
 
     NetClient shortConnectNetClient = new ShortConnectNetClient(new LengthFieldCodec());
 
-    ClientProxyFactory clientProxyFactory = new ClientProxyFactory(redisServiceDiscovery, ServiceLoadBalance,
-        shortConnectNetClient,
-        Hello.class);
+    ClientProxyFactory clientProxyFactory = new ClientProxyFactory(redisServiceDiscovery, ServiceLoadBalance, shortConnectNetClient, Hello.class);
 
     Hello hello = clientProxyFactory.getProxyClient();
 
     System.out.println(hello.hello("linuxea"));
     System.out.println(hello.hello("summer"));
+    System.out.println(hello.hello("abcdefg"));
+    System.out.println(hello.hello("i-love-china"));
 
 
   }

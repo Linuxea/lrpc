@@ -7,6 +7,7 @@ import com.linuxea.lrpc.client.loadbalance.PoolLoadBalance;
 import com.linuxea.lrpc.client.loadbalance.ServiceLoadBalance;
 import com.linuxea.lrpc.client.net.NetClient;
 import com.linuxea.lrpc.client.net.ShortConnectNetClient;
+import com.linuxea.lrpc.common.codec.LengthFieldCodec;
 import com.linuxea.lrpc.common.json.Jackson;
 import com.linuxea.lrpc.common.json.Json;
 import com.linuxea.lrpc.common.tutorial.Hello;
@@ -23,7 +24,7 @@ public class RpcClientTest {
     ServiceDiscoverer redisServiceDiscovery = new RedisServiceDiscovery(jedis, jackson);
     ServiceLoadBalance ServiceLoadBalance = new PoolLoadBalance();
 
-    NetClient shortConnectNetClient = new ShortConnectNetClient();
+    NetClient shortConnectNetClient = new ShortConnectNetClient(new LengthFieldCodec());
 
     ClientProxyFactory clientProxyFactory = new ClientProxyFactory(redisServiceDiscovery, ServiceLoadBalance,
         shortConnectNetClient,

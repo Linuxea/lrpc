@@ -1,5 +1,7 @@
 package com.linuxea.lrpc.common.compress;
 
+import java.util.Arrays;
+
 public enum CompressTypeEnum {
 
 
@@ -9,18 +11,22 @@ public enum CompressTypeEnum {
 
     ;
     private final byte code;
-    private final String desc;
+    private final String value;
 
-    CompressTypeEnum(byte code, String desc) {
+    CompressTypeEnum(byte code, String value) {
         this.code = code;
-        this.desc = desc;
+        this.value = value;
+    }
+
+    public static CompressTypeEnum from(byte compressType) {
+        return Arrays.stream(CompressTypeEnum.values()).filter(it -> it.getCode() == compressType).findFirst().orElse(null);
     }
 
     public byte getCode() {
         return code;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getValue() {
+        return value;
     }
 }

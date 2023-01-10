@@ -1,5 +1,7 @@
 package com.linuxea.lrpc.common.serialize;
 
+import java.util.Arrays;
+
 public enum SerailizeTypeEnum {
 
 
@@ -9,18 +11,22 @@ public enum SerailizeTypeEnum {
 
     ;
     private final byte code;
-    private final String desc;
+    private final String value;
 
-    SerailizeTypeEnum(byte code, String desc) {
+    SerailizeTypeEnum(byte code, String value) {
         this.code = code;
-        this.desc = desc;
+        this.value = value;
+    }
+
+    public static SerailizeTypeEnum from(byte serializeType) {
+        return Arrays.stream(SerailizeTypeEnum.values()).filter(it -> it.getCode() == serializeType).findFirst().orElse(null);
     }
 
     public byte getCode() {
         return code;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getValue() {
+        return value;
     }
 }

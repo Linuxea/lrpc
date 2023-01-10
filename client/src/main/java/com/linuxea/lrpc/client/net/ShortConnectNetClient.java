@@ -1,5 +1,8 @@
 package com.linuxea.lrpc.client.net;
 
+import com.linuxea.lrpc.common.codec.AbstractMessageCodecFactory;
+import com.linuxea.lrpc.common.codec.MessageDecode;
+import com.linuxea.lrpc.common.codec.MessageEncode;
 import com.linuxea.lrpc.common.model.RpcMessage;
 import com.linuxea.lrpc.common.model.RpcRequest;
 import com.linuxea.lrpc.common.model.RpcResponse;
@@ -13,6 +16,12 @@ import java.net.Socket;
 
 public class ShortConnectNetClient implements NetClient {
 
+  private final AbstractMessageCodecFactory abstractMessageCodecFactory;
+
+  public ShortConnectNetClient(AbstractMessageCodecFactory abstractMessageCodecFactory) {
+    this.abstractMessageCodecFactory = abstractMessageCodecFactory;
+  }
+
   @Override
   public RpcResponse sendReq(RpcRequest rpcRequest, Service service) throws Exception {
 
@@ -25,13 +34,12 @@ public class ShortConnectNetClient implements NetClient {
       rpcMessage.setSerialize(service.getSerialize());
       rpcMessage.setCompress(service.getCompress());
 
-      SerializeFactory serializeFactory = SerializeFactoryBuilder.build(service.getSerialize());
-      // req
-      outputStream.write(serializeFactory.serialize(rpcMessage));
+      MessageEncode encode = this.abstractMessageCodecFactory.encode();
+      outputStream.write(encode.encode(rpcMessage));
       // resp
       byte[] readAllBytes = socketInputStream.readAllBytes();
-      RpcMessage respRpcMessage = serializeFactory.deserialize(readAllBytes, RpcMessage.class);
-      return (RpcResponse) respRpcMessage.getData();
+      MessageDecode decode = this.abstractMessageCodecFactory.decode();
+      return (RpcResponse) decode.decode(readAllBytes).getData();
     }
   }
 }

@@ -66,6 +66,7 @@ public class ServerSocketRpcServer extends RpcServer {
       while (true) {
         try (InputStream inputStream = accept.getInputStream(); OutputStream outputStream = accept.getOutputStream()) {
 
+
           byte[] read = new byte[1024];
           int offset = inputStream.read(read);
           byte[] dest = new byte[offset];

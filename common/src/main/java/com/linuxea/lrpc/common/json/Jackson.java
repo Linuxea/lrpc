@@ -29,6 +29,7 @@ public class Jackson implements Json {
     try {
       return objectMapper.readValue(json, tClass);
     } catch (JsonProcessingException e) {
+      System.out.println(json);
       throw new JsonException(e);
     }
   }

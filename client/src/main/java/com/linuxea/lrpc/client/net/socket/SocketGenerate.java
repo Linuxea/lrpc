@@ -16,4 +16,13 @@ public interface SocketGenerate {
      */
     Socket get(String host, int port) throws Exception;
 
+
+    /**
+     * socket 归还
+     *
+     * @param socket client socket
+     * @throws Exception
+     */
+    void close(Socket socket) throws Exception;
+
 }

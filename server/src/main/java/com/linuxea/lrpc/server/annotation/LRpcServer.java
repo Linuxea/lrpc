@@ -10,12 +10,12 @@ import java.lang.annotation.Target;
 public @interface LRpcServer {
 
 
-  /**
-   * 服务名称
-   *
-   * @return
-   */
-  String serviceName();
+    /**
+     * 服务名称
+     *
+     * @return
+     */
+    String serviceName();
 
 
 }

@@ -9,4 +9,9 @@ public class SocketPrototypeGenerate implements SocketGenerate {
         return new Socket(host, port);
 
     }
+
+    @Override
+    public void close(Socket socket) throws Exception {
+        socket.close();
+    }
 }

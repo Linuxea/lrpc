@@ -29,17 +29,21 @@ public class ShortConnectNetClient implements NetClient {
         String ip = service.getIp();
         Integer port = service.getPort();
         Socket socket = socketGenerate.get(ip, port);
-        OutputStream outputStream = socket.getOutputStream();
-        InputStream socketInputStream = socket.getInputStream();
-        RpcMessage rpcMessage = new RpcMessage();
-        rpcMessage.setData(rpcRequest);
-        rpcMessage.setSerialize(service.getSerialize());
-        rpcMessage.setCompress(service.getCompress());
+        try {
+            OutputStream outputStream = socket.getOutputStream();
+            InputStream socketInputStream = socket.getInputStream();
+            RpcMessage rpcMessage = new RpcMessage();
+            rpcMessage.setData(rpcRequest);
+            rpcMessage.setSerialize(service.getSerialize());
+            rpcMessage.setCompress(service.getCompress());
 
-        MessageEncode encode = this.abstractMessageCodecFactory.encode();
-        outputStream.write(encode.encode(rpcMessage));
-        // resp
-        MessageDecode decode = this.abstractMessageCodecFactory.decode();
-        return (RpcResponse) decode.decode(socketInputStream).getData();
+            MessageEncode encode = this.abstractMessageCodecFactory.encode();
+            outputStream.write(encode.encode(rpcMessage));
+            // resp
+            MessageDecode decode = this.abstractMessageCodecFactory.decode();
+            return (RpcResponse) decode.decode(socketInputStream).getData();
+        } finally {
+            socketGenerate.close(socket);
+        }
     }
 }

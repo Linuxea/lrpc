@@ -8,16 +8,16 @@ import java.net.UnknownHostException;
  */
 public interface RegistryServer {
 
-  /**
-   * 注册
-   */
-  void registry(ServiceObj serviceObj) throws Exception;
+    /**
+     * 注册
+     */
+    void registry(ServiceObj serviceObj) throws Exception;
 
 
-  /**
-   * 移除注册
-   */
-  void remove() throws UnknownHostException, Exception;
+    /**
+     * 移除注册
+     */
+    void remove() throws UnknownHostException, Exception;
 
 
 }

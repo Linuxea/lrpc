@@ -6,6 +6,6 @@ package com.linuxea.lrpc.server;
  */
 public interface RegisterQuery {
 
-  ServiceObj get(String name);
+    ServiceObj get(String name);
 
 }

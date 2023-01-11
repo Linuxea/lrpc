@@ -14,25 +14,25 @@ import redis.clients.jedis.Jedis;
 public class RpcServerTest {
 
 
-  @Test
-  public void testServer() throws Exception {
+    @Test
+    public void testServer() throws Exception {
 
-    Jedis jedis = new Jedis("redis-host.com", 6379);
-    Json jackson = new Jackson(new ObjectMapper());
-    RegistryServer redisRegisterServer = new RedisRegisterServer(jedis, jackson, 9090, SerailizeTypeEnum.JDK.getCode(), CompressTypeEnum.GZIP.getCode());
-    BaseHandler requestReflectHandler = new RequestReflectHandler((RegisterQuery) redisRegisterServer);
-    RpcServer rpcServer = new ServerSocketRpcServer(9090, redisRegisterServer, requestReflectHandler, new LengthFieldCodec());
+        Jedis jedis = new Jedis("redis-host.com", 6379);
+        Json jackson = new Jackson(new ObjectMapper());
+        RegistryServer redisRegisterServer = new RedisRegisterServer(jedis, jackson, 9090, SerailizeTypeEnum.JDK.getCode(), CompressTypeEnum.GZIP.getCode());
+        BaseHandler requestReflectHandler = new RequestReflectHandler((RegisterQuery) redisRegisterServer);
+        RpcServer rpcServer = new ServerSocketRpcServer(9090, redisRegisterServer, requestReflectHandler, new LengthFieldCodec());
 
-    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-      try {
-        rpcServer.stop();
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
-    }));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                rpcServer.stop();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }));
 
-    rpcServer.start();
+        rpcServer.start();
 
-  }
+    }
 
 }

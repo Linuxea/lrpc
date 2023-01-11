@@ -2,10 +2,11 @@ package com.linuxea.lrpc.client.discovery;
 
 import com.linuxea.lrpc.common.json.Json;
 import com.linuxea.lrpc.common.model.Service;
+import redis.clients.jedis.Jedis;
+
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import redis.clients.jedis.Jedis;
 
 public class RedisServiceDiscovery implements ServiceDiscoverer {
 
@@ -18,10 +19,9 @@ public class RedisServiceDiscovery implements ServiceDiscoverer {
   }
 
   @Override
-  public List<Service> discovery(String serviceName) {
+  public synchronized List<Service> discovery(String serviceName) {
     String servicePath = "/rpc" + "/" + serviceName + "/service";
     Set<String> members = this.jedis.smembers(servicePath);
-    return members.stream().map(member -> this.json.toObj(member, Service.class))
-        .collect(Collectors.toList());
+    return members.stream().map(member -> this.json.toObj(member, Service.class)).collect(Collectors.toList());
   }
 }

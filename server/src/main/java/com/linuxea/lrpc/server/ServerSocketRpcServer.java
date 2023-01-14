@@ -31,14 +31,6 @@ public class ServerSocketRpcServer extends RpcServer {
 
     @Override
     public void start() throws Exception {
-        // 注册所有服务 tutorial
-        ServiceObj serviceObj = new ServiceObj();
-        serviceObj.setName(Hello.class.getName());
-        serviceObj.setClazz(Hello.class);
-        serviceObj.setObj(new HelloImpl());
-        this.registryServer.registry(serviceObj);
-
-
         serverSocket = new ServerSocket(port);
         while (!serverSocket.isClosed()) {
             try {

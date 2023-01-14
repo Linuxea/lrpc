@@ -37,6 +37,9 @@ public class RpcClientTest {
             System.out.println(hello.hello("linuxea"));
             System.out.println(hello.hello("summer"));
             System.out.println(hello.hello("little ming"));
+            System.out.println(hello.now());
+            System.out.println(hello.now());
+            System.out.println(hello.now());
         });
 
 

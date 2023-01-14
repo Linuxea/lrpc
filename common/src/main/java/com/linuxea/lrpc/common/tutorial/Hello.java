@@ -4,4 +4,6 @@ public interface Hello {
 
   String hello(String name);
 
+  String now();
+
 }
